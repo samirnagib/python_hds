@@ -1,0 +1,122 @@
+import requests
+import sys
+import xml.etree.ElementTree as ET
+import base64
+import json
+import pandas as pd
+
+senha = None
+
+url = "http://cmay22wb01.globoi.com:81/SearchSvc/CVWebService.svc/Login"
+
+headers = {"Content-Type": "application/json; charset=utf-8"}
+
+data = {
+    "username":"Samir",
+    "password":"IVJ2MzB0QXoj",
+}
+
+R = requests.post(url,headers=headers ,json=data)
+print("Status Code:", R.status_code)
+
+token = None
+
+if R.status_code == 200:
+    root = ET.fromstring(R.text)
+    if 'token' in root.attrib:
+        token = root.attrib['token']
+        print("Login feito com sucesso")
+        #print(token)
+        # print(token[5:]) # token sem o QSDK
+        senha = token[5:]
+
+
+    else:
+        print("Falha na autenticação")
+else:
+
+   print ('there was an error logging in')
+
+#Parte do relatorio
+
+
+
+url_report = "http://cmay22wb01.globoi.com/webconsole/api/cr/reportsplusengine/datasets/METRICS_DEFAULT/data?livefeed=true&parameter.param8=4&parameter.param9=0&offset=0&dateFormat=milliseconds&priority=normal&nullValue=&syscol=false&parameter.param10=&limit=-1&parameter.param2=5&parameter.param3=0&parameter.param1=-1&parameter.param11=&parameter.param6=TB&operation=METRICS_EXECUTE_SP&parameter.param7=NULL&parameter.spName=RptMonthlyStorageUsage&parameter.param4=1&parameter.param5=2022-10-02 00:00:00"
+
+report_headers = { "Accept":"application/json", "AuthToken":senha}
+
+
+AIO = requests.get(url_report,headers=report_headers)
+print("Status Code:", AIO.status_code)
+
+report_data = json.loads(AIO.content)
+
+
+Billing_Tag = []
+Tag_Notes = []
+CommServ_UniqueId = []
+CommCell_Name = []
+Client_Groups = []
+Client = []
+Agent = []
+Instance = []
+Backupset = []
+Subclient = []
+Storage_Policy = []
+Copy = []
+Front_End_Backup_Size = []
+Front_End_Backup_Cost = []
+Front_End_Archive_Size = []
+Front_End_Archive_Cost = []
+Primary_App_Size = []
+Primary_App_Cost = []
+Protected_App_Size = []
+Protected_App_Cost = []
+Media_Size = []
+Media_Cost = []
+Total_Cost = []
+Copy_Type = [] 
+
+
+
+#report_data['columns']
+#for x in report_data['columns']:
+    #keys = x
+    #print(x.keys() )
+    #print(x.values() )
+#    colunas.append(x['dataField'])
+#print(colunas)
+
+for y in report_data['records']:
+    Billing_Tag.append(y[0])
+    Tag_Notes.append(y[1])
+    CommServ_UniqueId.append(y[2])
+    CommCell_Name.append(y[3])
+    Client_Groups.append(y[4])
+    Client.append(y[5])
+    Agent.append(y[6])
+    Instance.append(y[7])
+    Backupset.append(y[8])
+    Subclient.append(y[9])
+    Storage_Policy.append(y[10])
+    Copy.append(y[11])
+    Front_End_Backup_Size.append(y[12])
+    Front_End_Backup_Cost.append(y[13])
+    Front_End_Archive_Size.append(y[14])
+    Front_End_Archive_Cost.append(y[15])
+    Primary_App_Size.append(y[16])
+    Primary_App_Cost.append(y[17])
+    Protected_App_Size.append(y[18])
+    Protected_App_Cost.append(y[19])
+    Media_Size.append(y[20])
+    Media_Cost.append(y[21])
+    Total_Cost.append(y[22])
+    Copy_Type.append(y[23]) 
+
+pd.set_option('display.max_rows', None)
+rel_charge = pd.DataFrame(
+    list(zip(Billing_Tag,Client,Instance,Backupset,Subclient,Storage_Policy,Copy,Front_End_Backup_Size,Front_End_Archive_Size,Primary_App_Size,Protected_App_Size,Media_Size)),
+    columns=['Billing Tag','Client','Instance','Backupset','Subclient','Storage_Policy','Copy','FEB Size','FEA Size','Primary AppSize','Protected App Size', 'Media Size']
+)
+
+print(rel_charge)
