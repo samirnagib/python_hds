@@ -17,11 +17,10 @@ db_source = pyodbc.connect('Driver={SQL Server};'
                       'Trusted_Connection=no;'
                       'UID=script;'
                       'PWD=Samir102022')
+
 c_sqlsrv = db_source.cursor()
-
-
 c_mysql = db_destiny.cursor()
-c_mysql.execute('SELECT clientName FROM cvbill_prd.clientes order by clientName limit 20')
+c_mysql.execute("SELECT clientName FROM cvbill_prd.clientes where clientName like 'CLPADSASR001%' order by clientName ")
 r_mysql = c_mysql.fetchall()
 
 # Query parameters
