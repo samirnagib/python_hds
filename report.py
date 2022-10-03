@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import base64
 import json
 import pandas as pd
+import datetime
 
 senha = None
 
@@ -114,9 +115,23 @@ for y in report_data['records']:
     Copy_Type.append(y[23]) 
 
 pd.set_option('display.max_rows', None)
+#pd.set_option('display.max_cols', None)
+#rel_charge = pd.DataFrame(
+#    list(zip(Billing_Tag,Client,Instance,Backupset,Subclient,Storage_Policy,Copy,Front_End_Backup_Size,Front_End_Archive_Size,Primary_App_Size,Protected_App_Size,Media_Size)),
+#    columns=['Billing Tag','Client','Instance','Backupset','Subclient','Storage_Policy','Copy','FEB Size','FEA Size','Primary AppSize','Protected App Size', 'Media Size']
+#)
+
+#VERSÃO REDUZIDA
 rel_charge = pd.DataFrame(
-    list(zip(Billing_Tag,Client,Instance,Backupset,Subclient,Storage_Policy,Copy,Front_End_Backup_Size,Front_End_Archive_Size,Primary_App_Size,Protected_App_Size,Media_Size)),
-    columns=['Billing Tag','Client','Instance','Backupset','Subclient','Storage_Policy','Copy','FEB Size','FEA Size','Primary AppSize','Protected App Size', 'Media Size']
+    list(zip(Client)),
+    columns=['Client']
 )
 
-print(rel_charge)
+dataf = datetime.datetime.now()
+arq = "rel_charge_"+dataf.strftime("%Y%m%d_%H%M%S")+".csv"
+
+#print(rel_charge)
+rel_charge.to_csv(arq,index=False)
+#with open('relat.txt', 'w') as f:
+#    f.write(str(rel_charge))
+#f.close()
