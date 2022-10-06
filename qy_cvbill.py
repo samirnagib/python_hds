@@ -34,6 +34,7 @@ qy_source = "SELECT id,name,GUID FROM commserv.[dbo].[APP_Client] WHERE name lik
 
 #print(qy_destiny_sel_cn.format(server_valor))
 #c_mysql.execute(qy_destiny_sel_cn.format(server_valor))
+# Executa as leituras dos dados do relatorio
 c_mysql.execute(qy_destiny_sel_rp)
 r_mysql = c_mysql.fetchall()
 
@@ -42,13 +43,15 @@ r_mysql = c_mysql.fetchall()
 for x in r_mysql:
     print("Executanto a pesquisa do serviror: ", x[0])
     print(qy_source.format(x[0]))
+    #pesquisa o nome do servidor na base do commvault para receber o UUID
     c_sqlsrv.execute(qy_source.format(x[0]))
     r_sqlsrv = c_sqlsrv.fetchone()
+    # guarda as informações do servidor e do uuid
     server_valor = r_sqlsrv[1]
     server_uuid = r_sqlsrv[2]
     print(server_valor)
     print(server_uuid)
-    c_mysql.execute(qy_destiny_sel_cn.format(server_valor))
+    c_mysql.execute(qy_destiny_sel_id.format(server_uuid))
     r_mysql2 = c_mysql.fetchall()
     for server in r_mysql2:
-        
+       pass 
