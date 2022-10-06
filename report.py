@@ -42,7 +42,7 @@ else:
 
 
 
-url_report = "http://cmay22wb01.globoi.com/webconsole/api/cr/reportsplusengine/datasets/METRICS_DEFAULT/data?livefeed=true&parameter.param8=4&parameter.param9=0&offset=0&dateFormat=milliseconds&priority=normal&nullValue=&syscol=false&parameter.param10=&limit=-1&parameter.param2=5&parameter.param3=0&parameter.param1=-1&parameter.param11=&parameter.param6=TB&operation=METRICS_EXECUTE_SP&parameter.param7=NULL&parameter.spName=RptMonthlyStorageUsage&parameter.param4=1&parameter.param5=2022-10-02 00:00:00"
+url_report = "http://cmay22wb01.globoi.com/webconsole/api/cr/reportsplusengine/datasets/METRICS_DEFAULT/data?livefeed=true&parameter.param8=4&parameter.param9=0&offset=0&dateFormat=milliseconds&priority=normal&nullValue=&syscol=false&parameter.param10=&limit=-1&parameter.param2=5&parameter.param3=0&parameter.param1=-1&parameter.param11=&parameter.param6=TB&operation=METRICS_EXECUTE_SP&parameter.param7=NULL&parameter.spName=RptMonthlyStorageUsage&parameter.param4=1&parameter.param5=2022-10-05 00:00:00"
 
 report_headers = { "Accept":"application/json", "AuthToken":senha}
 
@@ -114,18 +114,18 @@ for y in report_data['records']:
     Total_Cost.append(y[22])
     Copy_Type.append(y[23]) 
 
-pd.set_option('display.max_rows', None)
+#pd.set_option('display.max_rows', None)
 #pd.set_option('display.max_cols', None)
-#rel_charge = pd.DataFrame(
-#    list(zip(Billing_Tag,Client,Instance,Backupset,Subclient,Storage_Policy,Copy,Front_End_Backup_Size,Front_End_Archive_Size,Primary_App_Size,Protected_App_Size,Media_Size)),
-#    columns=['Billing Tag','Client','Instance','Backupset','Subclient','Storage_Policy','Copy','FEB Size','FEA Size','Primary AppSize','Protected App Size', 'Media Size']
-#)
+rel_charge = pd.DataFrame(
+    list(zip(Billing_Tag,Client,Instance,Backupset,Subclient,Storage_Policy,Copy,Front_End_Backup_Size,Front_End_Archive_Size,Primary_App_Size,Protected_App_Size,Media_Size)),
+    columns=['Billing Tag','Client','Instance','Backupset','Subclient','Storage_Policy','Copy','FEB Size','FEA Size','Primary AppSize','Protected App Size', 'Media Size']
+)
 
 #VERSÃO REDUZIDA
-rel_charge = pd.DataFrame(
-    list(zip(Client)),
-    columns=['Client']
-)
+#rel_charge = pd.DataFrame(
+#    list(zip(Billing_Tag,Client,Instance)),
+#    columns=['Billing Tag','Client','Instance']
+#)
 
 dataf = datetime.datetime.now()
 arq = "rel_charge_"+dataf.strftime("%Y%m%d_%H%M%S")+".csv"
