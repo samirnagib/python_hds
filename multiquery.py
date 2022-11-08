@@ -33,7 +33,8 @@ for x in r_mysql:
     print("Select:")
     print(query.format(pesquisa))
     c_sqlsrv.execute(query.format(pesquisa))
-    r_sqlsrv = c_sqlsrv.fetchall()
-    for z in r_sqlsrv: 
-        print(z)
-    
+    r_sqlsrv = c_sqlsrv.fetchone()
+    print(r_sqlsrv)
+    print(r_sqlsrv[5])
+    #for iten in r_sqlsrv:
+    #  print(iten[5])

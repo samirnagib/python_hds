@@ -42,7 +42,7 @@ else:
 
 
 
-url_report = "http://cmay22wb01.globoi.com/webconsole/api/cr/reportsplusengine/datasets/METRICS_DEFAULT/data?livefeed=true&parameter.param8=4&parameter.param9=0&offset=0&dateFormat=milliseconds&priority=normal&nullValue=&syscol=false&parameter.param10=&limit=-1&parameter.param2=5&parameter.param3=0&parameter.param1=-1&parameter.param11=&parameter.param6=TB&operation=METRICS_EXECUTE_SP&parameter.param7=NULL&parameter.spName=RptMonthlyStorageUsage&parameter.param4=1&parameter.param5=2022-10-05 00:00:00"
+url_report = "http://cmay22wb01.globoi.com/webconsole/api/cr/reportsplusengine/datasets/METRICS_DEFAULT/data?livefeed=true&parameter.param8=4&parameter.param9=0&offset=0&dateFormat=milliseconds&priority=normal&nullValue=&syscol=false&parameter.param10=&limit=-1&parameter.param2=5&parameter.param3=0&parameter.param1=-1&parameter.param11=&parameter.param6=TB&operation=METRICS_EXECUTE_SP&parameter.param7=NULL&parameter.spName=RptMonthlyStorageUsage&parameter.param4=1&parameter.param5=2022-10-10 00:00:00"
 
 report_headers = { "Accept":"application/json", "AuthToken":senha}
 
@@ -130,8 +130,9 @@ rel_charge = pd.DataFrame(
 dataf = datetime.datetime.now()
 arq = "rel_charge_"+dataf.strftime("%Y%m%d_%H%M%S")+".csv"
 
-#print(rel_charge)
 rel_charge.to_csv(arq,index=False)
+print(rel_charge)
+
 #with open('relat.txt', 'w') as f:
 #    f.write(str(rel_charge))
 #f.close()

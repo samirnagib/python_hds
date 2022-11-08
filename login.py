@@ -27,6 +27,8 @@ if R.status_code == 200:
         #print(token)
         # print(token[5:]) # token sem o QSDK
         senha = token[5:]
+        
+        print(senha)
 
 
     else:
@@ -34,6 +36,8 @@ if R.status_code == 200:
 else:
 
    print ('there was an error logging in')
+
+
 
 #Parte do relatorio
 
